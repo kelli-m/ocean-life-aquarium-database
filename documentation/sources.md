@@ -1,10 +1,15 @@
 # Source Citations
 
 **Oregon State University — Summer 2026**
+
 **CS340: Introduction to Databases**
+
 **Instructor:** Dr. Michael Curry
+
 **Term Project:** Ocean Life Public Aquarium
+
 **Project Group:** 40
+
 **Authors:** Kelli Muldoon and Reza Can Cihangir
 
 ## Technologies
