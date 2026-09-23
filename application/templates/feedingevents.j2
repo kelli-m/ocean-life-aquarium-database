@@ -1,0 +1,132 @@
+{#
+Citation for the following code:
+Date: 06/08/2026
+Copied from Oregon State University Summer 2026 - CS340 Intro to Databases
+Week 6 Building Your Project UI - Exploration: Web Application Technology
+(Explain Degree of Originality): Copied/pasted the starter code
+Source URL: https://canvas.oregonstate.edu/courses/2051721/pages/exploration-web-application-technology-2
+#}
+
+{% extends "main.j2" %}
+{% block content %}
+
+<h1>Feeding Events</h1>
+
+{# READ table #}
+<table>
+    <thead>
+        {# For the table header row, we print the DB attribute names and an empty one column for delete buttons. #}
+        <tr>
+            {#     
+            {% for key in feedingevents[0].keys() %}
+                <th>{{ key }}</th>
+            {% endfor %}
+            <th></th>
+            #}
+            <th>Feeding Event ID</th>
+            <th>Feed Time</th>
+            <th>Animal ID</th>
+            <th class="helper-header">Animal Name (Helper Column)</th>
+            <th>Feed ID</th>
+            <th class="helper-header">Feed Name (Helper Column)</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {# For each row, print the feedingEventID, feedEventTime, animalID, feedID #}
+        {% for feedingevent in feedingeventsjoined %}
+        <tr>
+            <td>{{ feedingevent.feedingEventID }}</td>
+            <td>{{ feedingevent.feedEventTime }}</td>
+            <td>{{ feedingevent.animalID }}</td>
+            <td>{{ feedingevent.animalName }}</td>
+            <td>{{ feedingevent.feedID }}</td>
+            <td>{{ feedingevent.feedName }}</td>
+
+            {# DELETE form #}
+            <form id="delete_feeding_event_form" method="POST" action="/feedingevents/delete">
+                {# Only ID is enough to delete the Feeding Event 2, 3 and 4th input are not necessary. #}
+                <input type="hidden" name="delete_feeding_event_id" value="{{ feedingevent.feedingEventID  }}">
+                <input type="hidden" name="delete_feeding_event_time" value="{{ feedingevent.feedEventTime }}">
+                <input type="hidden" name="delete_feeding_event_animal_id" value="{{ feedingevent.animalID }}">
+                <input type="hidden" name="delete_feeding_event_feed_id" value="{{ feedingevent.feedID }}">
+                <td>
+                    <button type="submit">
+                        Delete
+                    </button>
+                </td>
+            </form>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{# CREATE form #}
+<h2>Create a Feeding Event</h2>
+<form class="cuForm" id="create_feeding_event_form" method="POST" action="/feedingevents/create">
+    <fieldset>
+        <label for="create_feeding_event_time">Feeding Event Time: </label>
+        <input type="datetime-local" name="create_feeding_event_time" id="create_feeding_event_time" required>
+
+        <label for="create_feeding_event_animalid">Select an Animal ID: </label>
+        <select name="create_feeding_event_animalid" id="create_feeding_event_animalid" required>
+            <option value="" disabled selected>Select an Animal's Name</option>
+            {% for animal in animals %}
+                <option value="{{animal['animalID']}}">{{animal['animalID']}} - {{animal['animalName']}}</option>
+            {% endfor %}
+        </select>
+
+        <label for="create_feeding_event_feedid">Select a Feed ID: </label>
+        <select name="create_feeding_event_feedid" id="create_feeding_event_feedid" required>
+            <option value="" disabled selected>Select a Feed</option>
+            {% for feed in feeds %}
+                <option value="{{feed['feedID']}}">{{feed['feedID']}} - {{feed['feedName']}}</option>
+            {% endfor %}
+        </select>
+
+        <input type="submit">
+    </fieldset>
+</form>
+
+
+{# UPDATE form #}
+<h2>Update a Feeding Event</h2>
+<form class="cuForm" id="update_feeding_event_form" method="POST" action="/feedingevents/update">
+    <fieldset>
+        <label for="update_feeding_event_id">Select Feeding Event: </label>
+        <select name="update_feeding_event_id" id="update_feeding_event_id" required>
+            <option value="" disabled selected>Select a Feeding event's ID</option>
+            {% for feedingevent in feedingevents %}
+                <option value="{{ feedingevent['feedingEventID']}}" required>
+                    {{feedingevent['feedingEventID']}}
+                    -
+                    {{feedingevent['feedEventTime']}}
+                </option>
+            {% endfor %}
+        </select>
+        
+        <label for="update_feeding_event_time">Update Feeding Event Time: </label>
+        <input type="datetime-local" name="update_feeding_event_time" id="update_feeding_event_time" required>
+
+        <label for="update_feeding_event_animalid">Animal: </label>
+        <select name="update_feeding_event_animalid" id="update_feeding_event_animalid" required>
+            <option value="" disabled selected>Select an Animal's ID</option>
+            {% for animal in animals %}
+                <option value="{{animal['animalID']}}" required>{{animal['animalID']}} - {{animal['animalName']}}</option>
+            {% endfor %}
+        </select>
+
+        <label for="update_feeding_event_feedid">Feed: </label>
+        <select name="update_feeding_event_feedid" id="update_feeding_event_feedid" required>
+            <option value="" disabled selected>Select an Feed ID</option>
+            {% for feed in feeds %}
+                <option value="{{feed['feedID']}}" required>{{feed['feedID']}} - {{feed['feedName']}} </option>
+            {% endfor %}
+        </select>
+
+        <input type="submit">
+    </fieldset>
+</form>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{#
+Citation for the following code:
+Date: 06/08/2026
+Copied from Oregon State University Summer 2026 - CS340 Intro to Databases
+Week 6 Building Your Project UI - Exploration: Web Application Technology
+(Explain Degree of Originality): Copied/pasted the starter code
+Source URL: https://canvas.oregonstate.edu/courses/2051721/pages/exploration-web-application-technology-2
+#}
+
+{% extends "main.j2" %}
+{% block content %}
+
+<h1>Home page</h1>
+<div class="homepageDescription">
+   <h3>Made by Kelli Muldoon and Reza Can Cihangir</h3>
+   <p class="home-p">
+      Ocean Life is a public aquarium that is visited by approximately 3,000 people daily
+      from a wide range of ages and backgrounds. The aquarium is home to more than 500
+      species including dolphins, tropical fish, octopuses, sharks, whales, penguins, seals, 
+      and rays. The 15,000 marine animals at Ocean Life need to be fed every day 
+      and sometimes multiple times a day. The employees use various types of feed for the 
+      animals since they have different dietary needs. If these regular feeding operations 
+      are missed or performed inconsistently the animals' health can quickly decline, or 
+      worse, the animals could lose their lives. Therefore, the aquarium’s feeding
+      operations need to be tracked thoroughly.
+   </p>
+   <p class="home-p">
+      We propose a database management system to record and track these routine
+      feeding events. By utilizing our database, the feed given to the animals and the 
+      employees responsible with these tasks can be tracked. The database keeps track of the feeding 
+      events, who it was carried out by, and when it was performed. Our database project 
+      will ease operations of the aquarium and help it become more efficient by keeping 
+      track of the feedings of the 15,000 animals.
+   </p>
+</div>
+
+{% endblock %}

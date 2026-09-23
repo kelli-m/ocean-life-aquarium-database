@@ -1,0 +1,98 @@
+{#
+Citation for the following code:
+Date: 06/08/2026
+Copied from Oregon State University Summer 2026 - CS340 Intro to Databases
+Week 6 Building Your Project UI - Exploration: Web Application Technology
+(Explain Degree of Originality): Copied/pasted the starter code
+Source URL: https://canvas.oregonstate.edu/courses/2051721/pages/exploration-web-application-technology-2
+#}
+
+{% extends "main.j2" %}
+{% block content %}
+
+<h1>Aquarium Feeds</h1>
+
+{# READ table #}
+<table>
+    <thead>
+        {# For the table header row, we print the DB attribute names and an empty one column for delete buttons. #}
+        <tr>
+            {#
+            {% for key in feeds[0].keys() %}
+                <th>{{ key }}</th>
+            {% endfor %}
+            <th></th>
+            #}
+            <th>Feed ID</th>
+            <th>Feed Name</th>
+            <th>Feed Description</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {# For each row, print the feedID, feedName, description #}
+        {% for feed in feeds %}
+            <tr>
+                <td>{{ feed.feedID }}     </td>
+                <td>{{ feed.feedName }}   </td>
+                <td>{{ feed.description }}</td>
+
+                {# DELETE form #}
+                <form id="delete_feed_form" method="POST" action="/feeds/delete">
+                    {# Only ID is enough to delete the Feed. 2 and 3rd input are not necessary. #}
+                    <input type="hidden" name="delete_feed_id" value="{{ feed.feedID }}">
+                    <input type="hidden" name="delete_feed_name" value="{{ feed.feedName }}">
+                    <input type="hidden" name="delete_feed_description" value="{{ feed.description }}">
+                    <td>
+                        <button type="submit">
+                            Delete
+                        </button>
+                    </td>
+                </form>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{# CREATE form #}
+<h2>Create a Feed</h2>
+<form class="cuForm" id="create_feed_form" method="POST" action="/feeds/create">
+    <fieldset>
+        <label for="create_feed_name">Feed Name: </label>
+        <input type="text" name="create_feed_name" id="create_feed_name" required>
+
+        <label for="create_feed_description">Feed Description: </label>
+        <input type="text" name="create_feed_description" id="create_feed_description" required>
+
+        <input type="submit">
+    </fieldset>
+</form>
+
+{# UPDATE form #}
+<h2>Update a Feed</h2>
+<form class="cuForm" id="update_feed_form" method="POST" action="/feeds/update">
+    <fieldset>
+        <label for="update_feed_id">Feed Name: </label>
+        <select name="update_feed_id" id="update_feed_id" required>
+            <option value="" disabled selected>Select a Feed</option>
+            {% for feed in feeds %}
+            <option value="{{feed['feedID']}}" required>
+                {{feed['feedID']}}
+                -
+                {{feed['feedName']}}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label for="update_feed_name">Name: </label>
+        <input type="text" name="update_feed_name" id="update_feed_name" required>
+
+        <label for="update_feed_description">Description: </label>
+        <input type="text" name="update_feed_description" id="update_feed_description" required>
+
+        <input type="submit">
+    </fieldset>
+</form>
+
+{% endblock %}

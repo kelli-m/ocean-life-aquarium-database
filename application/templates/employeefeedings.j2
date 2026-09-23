@@ -1,0 +1,130 @@
+{#
+Citation for the following code:
+Date: 06/08/2026
+Copied from Oregon State University Summer 2026 - CS340 Intro to Databases
+Week 6 Building Your Project UI - Exploration: Web Application Technology
+(Explain Degree of Originality): Copied/pasted the starter code
+Source URL: https://canvas.oregonstate.edu/courses/2051721/pages/exploration-web-application-technology-2
+#}
+
+{% extends "main.j2" %}
+{% block content %}
+
+<h1>Employee Feedings</h1>
+
+{# READ table #}
+<table>
+    <thead>
+        {# For the table header row, we print the DB attribute names and an empty one column for delete buttons. #}
+        <tr>
+            {#
+            {% for key in employeefeedings[0].keys() %}
+                <th>{{ key }}</th>
+            {% endfor %}
+            <th></th>#}
+            <th>Employee Feeding ID</th>
+            <th>Employee ID</th>
+            <th class="helper-header">Employee Full Name (Helper Column)</th>
+            <th>Feeding Event ID</th>
+            <th class="helper-header">Feeding Event Time (Helper Column)</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {# For each row, print the employeeFeedingID, employeeID, feedingEventID #}
+        {% for employeefeeding in employeefeedingsjoined %}
+        <tr>
+            <td>{{ employeefeeding.employeeFeedingID }}</td>
+            <td>{{ employeefeeding.employeeID }}</td>
+            <td>{{ employeefeeding.firstName }} {{ employeefeeding.lastName }}</td>
+            <td>{{ employeefeeding.feedingEventID }}</td>
+            <td>{{ employeefeeding.feedEventTime }}</td>
+
+            {# DELETE form #}
+            <form id="delete_employeefeeding_form" method="POST" action="/employeefeedings/delete">
+                {# Only ID is enough to delete the Employee Feeding. 2 and 3rd input are not necessary. #}
+                <input type="hidden" name="delete_employeefeeding_id" value="{{ employeefeeding.employeeFeedingID }}">
+                <input type="hidden" name="delete_employeefeeding_employeeID" value="{{ employeefeeding.employeeID }}">
+                <input type="hidden" name="delete_employeefeeding_feedingEventID" value="{{ employeefeeding.feedingEventID }}">
+                <td>
+                    <button type="submit">
+                        Delete
+                    </button>
+                </td>
+            </form>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{# CREATE form #}
+<h2>Create a Employee Feeding Event</h2>
+<form class="cuForm" id="create_employee_feeding_form" method="POST" action="/employeefeedings/create">
+
+    <fieldset>
+    
+        <label for="create_employee_feeding_employeeid">Employee ID: </label>
+        <select name="create_employee_feeding_employeeid" id="create_employee_feeding_employeeid" required>
+            <option value="" disabled selected>Select an Employee ID</option>
+            {% for employee in employees %}
+                <option value="{{employee['employeeID']}}">{{employee['employeeID']}} - {{employee['firstName']}} {{employee['lastName']}}</option>
+            {% endfor %}
+        </select>
+
+        <label for="create_employee_feeding_feedingeventid">Feeding Event ID: </label>
+        <select name="create_employee_feeding_feedingeventid" id="create_employee_feeding_feedingeventid" required>
+            <option value="" disabled selected>Select a feeding event ID</option>
+            {% for feedingevent in feedingevents %}
+                <option value="{{feedingevent['feedingEventID']}}">{{feedingevent['feedingEventID']}} - {{feedingevent['feedEventTime']}}</option>
+            {% endfor %}
+        </select>
+
+        <input type="submit">
+    </fieldset>
+</form>
+
+{# UPDATE form #}
+<h2>Update a Employee Feeding Event</h2>
+<form class="cuForm" id="update_employee_feeding_form" method="POST" action="/employeefeedings/update">
+    <fieldset>
+        <label for="update_employee_feeding_id">Select Employee Feeding: </label>
+        <select name="update_employee_feeding_id" id="update_employee_feeding_id" required>
+            <option value="" disabled selected>Select an Employee Feeding ID</option>
+            {% for employeefeeding in employeefeedings %}
+                <option value="{{ employeefeeding['employeeFeedingID']}}" required>
+                    {{employeefeeding['employeeFeedingID']}}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="update_employee_feeding_employeeid">Select Employee: </label>
+        <select name="update_employee_feeding_employeeid" id="update_employee_feeding_employeeid" required>
+            <option value="" disabled selected>Select an Employee ID</option>
+            {% for employee in employees %}
+            <option value="{{ employee['employeeID']}}" required>
+                {{employee['employeeID']}}
+                -
+                {{employee['firstName']}} {{employee['lastName']}}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label for="update_employee_feeding_feedingeventid">Select Feeding Event: </label>
+        <select name="update_employee_feeding_feedingeventid" id="update_employee_feeding_feedingeventid" required>
+            <option value="" disabled selected>Select a Feeding Event ID</option>
+            {% for feedingevent in feedingevents %}
+                <option value="{{ feedingevent['feedingEventID']}}" required>
+                    {{feedingevent['feedingEventID']}}
+                    -
+                    {{feedingevent['feedEventTime']}}
+                </option>
+            {% endfor %}
+        </select>
+
+        <input type="submit">
+    </fieldset>
+</form>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{#
+Citation for the following code:
+Date: 06/08/2026
+Copied from Oregon State University Summer 2026 - CS340 Intro to Databases
+Week 6 Building Your Project UI - Exploration: Web Application Technology
+(Explain Degree of Originality): Copied/pasted the starter code
+Source URL: https://canvas.oregonstate.edu/courses/2051721/pages/exploration-web-application-technology-2
+#}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>CS340 Project - Ocean Life Public Aquarium</title>
+        <link href='static/style.css' rel='stylesheet' />
+    </head>
+    <body>
+        <nav>
+            Navigation: 
+            <a href="/"                >Home             </a>
+            <a href="/animals"         >Animals          </a>
+            <a href="/employees"       >Employees        </a>
+            <a href="/feeds"           >Feeds            </a>
+            <a href="/employeefeedings">Employee Feedings</a>
+            <a href="/feedingevents"   >Feeding Events   </a>
+            {# <a id="reset-nav" href="/resetdatabase"   >RESET DB CONTENT </a>#}
+            {# <a id="delete-daisy-nav" href="/deletedaisy">Delete Daisy From Animals </a> #}
+            
+        </nav>
+        
+        {# 
+            A button that resets the database. 
+            Citation for the following code:
+            Date: 11/08/2026
+            (Explain Degree of Originality): Adapted from the jcunews1's comment.
+            Source URL: https://www.reddit.com/r/html5/comments/u7o29l/how_to_create_a_button_that_works_as_a_link_to/
+        #}
+        <p>
+            <a href="/resetdatabase">
+                <button id="reset-button">
+                    RESET DATABASE
+                </button>
+            </a>
+        </p>
+
+        {% block content %}{% endblock %}
+
+    </body>
+
+    <footer>
+        <p class="footer-p">&copy; 2026 Kelli Muldoon & Reza Can Cihangir</p>
+    </footer>
+</html>
